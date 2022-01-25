@@ -1,5 +1,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include <string>
+#include <fstream>
+#include <streambuf>
 #include <iostream>
 
 
@@ -64,13 +68,13 @@ int main() {
 	glEnableVertexAttribArray(0);
 
 	// vertex shader
-	const char* vertexShaderSource = "#version 460 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-		"}\0";
+	const char* vertexShaderSource;
 
+	std::ifstream vertFile("vertShader.glsl");
+	std::string vertString((std::istreambuf_iterator<char>(vertFile)),
+		std::istreambuf_iterator<char>());
+	vertexShaderSource = vertString.c_str();
+	
 	unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -78,12 +82,12 @@ int main() {
 	glCompileShader(vertexShader);
 
 	// fragment shader
-	const char* fragmentShaderSource = "#version 460 core\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"	FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
-		"}\0";
+	const char* fragmentShaderSource;
+
+	std::ifstream fragFile("fragShader.glsl");
+	std::string fragString((std::istreambuf_iterator<char>(fragFile)),
+		std::istreambuf_iterator<char>());
+	fragmentShaderSource = fragString.c_str();
 
 	unsigned int fragmentShader;
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
