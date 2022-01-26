@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\cpp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\cpp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\cpp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\cpp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
