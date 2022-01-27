@@ -9,6 +9,10 @@
 #include "shader.h"
 #include "stb_image.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 
 float mixValue = 0.5f;
 
@@ -169,7 +173,7 @@ int main() {
 	shaderProgram.use();
 	glUniform1i(glGetUniformLocation(shaderProgram.ID, "texture1"), 0);
 	shaderProgram.setInt("texture2", 1);
-
+	
 	// render loop
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
@@ -177,8 +181,13 @@ int main() {
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glm::mat4 trans = glm::mat4(1.0f);
+		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		trans = glm::scale(trans, glm::vec3(sin((float)glfwGetTime()), sin((float)glfwGetTime()), 1.0f));
+
 		shaderProgram.use();
 		shaderProgram.setFloat("mixValue", mixValue);
+		shaderProgram.setMat4("transform", trans);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture1);
