@@ -6,6 +6,8 @@
 #include <streambuf>
 #include <iostream>
 
+#include "shader.h"
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
@@ -84,44 +86,8 @@ int main() {
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	// vertex shader
-	const char* vertexShaderSource;
-
-	std::ifstream vertFile("vertShader.glsl");
-	std::string vertString((std::istreambuf_iterator<char>(vertFile)),
-		std::istreambuf_iterator<char>());
-	vertexShaderSource = vertString.c_str();
-	
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	// fragment shader
-	const char* fragmentShaderSource;
-
-	std::ifstream fragFile("fragShader.glsl");
-	std::string fragString((std::istreambuf_iterator<char>(fragFile)),
-		std::istreambuf_iterator<char>());
-	fragmentShaderSource = fragString.c_str();
-
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
 	// shader program
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	Shader shaderProgram("shader.vert", "shader.frag");
 
 	// render loop
 	while (!glfwWindowShouldClose(window)) {
@@ -132,7 +98,8 @@ int main() {
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(shaderProgram);
+		shaderProgram.use();
+
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
