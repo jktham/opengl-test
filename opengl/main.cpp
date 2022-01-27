@@ -13,7 +13,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
 float mixValue = 0.0f;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -41,15 +40,16 @@ void processInput(GLFWwindow* window) {
 float changeBlend(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
 		return 0.1f;
-	} else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+	}
+	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 		return -0.1f;
-	} else {
+	}
+	else {
 		return 0.0f;
 	}
 }
 
 int main() {
-
 	// window setup
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -215,7 +215,7 @@ int main() {
 	shaderProgram.use();
 	shaderProgram.setInt("texture1", 0);
 	shaderProgram.setInt("texture2", 1);
-	
+
 	// matrices
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
