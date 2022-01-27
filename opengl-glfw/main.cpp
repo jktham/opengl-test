@@ -46,23 +46,16 @@ int main() {
 
 	// vertex data
 	float vertices[] = {
+		-0.5f, -0.5f, 0.0f,
 		-0.5f,  0.5f, 0.0f,
 		 0.5f,  0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-
-		-0.3f,  0.3f, 0.0f,
-		 0.3f,  0.3f, 0.0f,
-		-0.3f, -0.3f, 0.0f,
-		 0.3f, -0.3f, 0.0f
+		 0.5f, -0.5f, 0.0f
 	};
 
 	// index data
 	unsigned int indices[] = {
-		1, 2, 0,
-		1, 2, 3,
-		4, 7, 5,
-		4, 7, 6
+		0, 1, 2,
+		2, 3, 0
 	};
 
 	// vertex array object
@@ -130,12 +123,17 @@ int main() {
 
 	// render loop
 	while (!glfwWindowShouldClose(window)) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 		processInput(window);
 
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		float timeValue = glfwGetTime();
+		float sinValue = (sin(timeValue)+1.0f)/2.0f;
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(vertexColorLocation, sinValue, sinValue, sinValue, 1.0f);
 
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
