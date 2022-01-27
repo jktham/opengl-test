@@ -25,10 +25,10 @@ void processInput(GLFWwindow* window) {
 		glfwSetWindowShouldClose(window, true);
 
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		mixValue += 0.001f;
+		mixValue += 0.016f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		mixValue -= 0.001f;
+		mixValue -= 0.016f;
 	}
 	if (mixValue < 0.0f) {
 		mixValue = 0.0f;
@@ -229,6 +229,7 @@ int main() {
 	// opengl settings
 	glEnable(GL_DEPTH_TEST);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glfwSwapInterval(1);
 
 	// render loop
 	while (!glfwWindowShouldClose(window)) {
