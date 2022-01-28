@@ -19,7 +19,7 @@ const unsigned int WINDOW_WIDTH = 1280;
 const unsigned int WINDOW_HEIGHT = 720;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 10.0f));
 float last_x = WINDOW_WIDTH / 2.0f;
 float last_y = WINDOW_HEIGHT / 2.0f;
 bool first_mouse = true;
@@ -27,9 +27,18 @@ bool first_mouse = true;
 // timing
 float delta_time = 0.0f;
 float last_frame = 0.0f;
+int frame_counter = 0;
+float delta_time_sum = 0.0f;
+float frame_rate = 0.0f;
 
 // texture mixing
 float mix_value = 0.0f;
+
+// cubes
+const int cube_amount = 50;
+float cube_area = 20.0f;
+float cube_rotation = 0.0f;
+float cube_rotation_speed = 0.01f;
 
 // callbacks
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -37,7 +46,8 @@ void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-int main() {
+int main()
+{
 	// window setup
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -100,18 +110,18 @@ int main() {
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	glm::vec3 cube_positions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
-	};
+	srand((unsigned)time(NULL));
+	glm::vec3 cube_positions[cube_amount]{};
+	for (unsigned int i = 0; i < cube_amount; i++)
+	{
+		cube_positions[i] = glm::vec3((float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f, (float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f, (float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f);
+	}
+
+	glm::vec3 cube_rotation_axes[cube_amount]{};
+	for (unsigned int i = 0; i < cube_amount; i++)
+	{
+		cube_rotation_axes[i] = glm::normalize(glm::vec3((float)std::rand() / RAND_MAX * 2.0f - 1.0f, (float)std::rand() / RAND_MAX * 2.0f - 1.0f, (float)std::rand() / RAND_MAX * 2.0f - 1.0f));
+	}
 
 	// vertex array object
 	unsigned int VAO;
@@ -192,6 +202,20 @@ int main() {
 		delta_time = current_frame - last_frame;
 		last_frame = current_frame;
 
+		if (frame_counter < 59)
+		{
+			frame_counter += 1;
+			delta_time_sum += delta_time;
+		}
+		else
+		{
+			frame_rate = 1.0f / delta_time_sum * 60.0f;
+			frame_counter = 0;
+			delta_time_sum = 0.0f;
+		}
+
+		std::cout << "time: " << (float)glfwGetTime() << ", delta: " << delta_time << ", fps: " << frame_rate << "\n";
+
 		// keyboard input
 		processInput(window);
 
@@ -200,9 +224,10 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// update matrices
-		model = glm::rotate(glm::mat4(1.0f), (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+		model = glm::mat4(1.0f);
 		view = camera.getViewMatrix();
 		projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+		cube_rotation += cube_rotation_speed;
 
 		// set uniforms
 		shader.use();
@@ -219,12 +244,11 @@ int main() {
 
 		// draw vertices
 		glBindVertexArray(VAO);
-		for (unsigned int i = 0; i < 10; i++)
+		for (unsigned int i = 0; i < cube_amount; i++)
 		{
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cube_positions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
+			model = glm::rotate(model, cube_rotation, cube_rotation_axes[i]);
 			shader.setMat4("model", model);
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -256,7 +280,7 @@ void processInput(GLFWwindow* window)
 		camera.processKeyboard(RIGHT, delta_time);
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-		camera.m_speed = SPEED * 3.0f;
+		camera.m_speed = SHIFT_SPEED;
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
 		camera.m_speed = SPEED;
 
@@ -268,6 +292,11 @@ void processInput(GLFWwindow* window)
 		mix_value = 0.0f;
 	if (mix_value > 1.0f)
 		mix_value = 1.0f;
+
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		cube_rotation_speed += 0.001f;
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		cube_rotation_speed -= 0.001f;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
