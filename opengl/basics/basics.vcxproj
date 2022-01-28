@@ -18,13 +18,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\stb_image.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shader.frag" />
+    <None Include="src\shader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="img\awesomeface.png" />
+    <Image Include="img\brick.jpg" />
+    <Image Include="img\wood.jpg" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{ab3ffa7b-6be1-4e1a-b0fc-6788f8e088eb}</ProjectGuid>
-    <RootNamespace>test</RootNamespace>
+    <RootNamespace>basics</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>test</ProjectName>
+    <ProjectName>basics</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -142,24 +161,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="glad.c" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="stb_image.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shader.frag" />
-    <None Include="shader.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="stb_image.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="awesomeface.png" />
-    <Image Include="brick.jpg" />
-    <Image Include="wood.jpg" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
