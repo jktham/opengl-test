@@ -45,13 +45,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="img\awesomeface.png">
+    <Image Include="res\awesomeface.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="img\brick.jpg">
+    <Image Include="res\brick.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="img\wood.jpg">
+    <Image Include="res\wood.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

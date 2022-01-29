@@ -33,9 +33,9 @@
     <None Include="src\shader.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="img\awesomeface.png" />
-    <Image Include="img\brick.jpg" />
-    <Image Include="img\wood.jpg" />
+    <Image Include="res\awesomeface.png" />
+    <Image Include="res\brick.jpg" />
+    <Image Include="res\wood.jpg" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
