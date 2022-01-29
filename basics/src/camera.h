@@ -6,7 +6,7 @@
 
 #include <vector>
 
-enum Camera_Movement {
+enum class Camera_Movement {
 	FORWARD,
 	BACKWARD,
 	LEFT,
@@ -55,13 +55,13 @@ public:
 	void processKeyboard(Camera_Movement direction, float delta_time)
 	{
 		float velocity = m_speed * delta_time;
-		if (direction == FORWARD)
+		if (direction == Camera_Movement::FORWARD)
 			m_position += m_front * velocity;
-		if (direction == BACKWARD)
+		if (direction == Camera_Movement::BACKWARD)
 			m_position -= m_front * velocity;
-		if (direction == LEFT)
+		if (direction == Camera_Movement::LEFT)
 			m_position -= m_right * velocity;
-		if (direction == RIGHT)
+		if (direction == Camera_Movement::RIGHT)
 			m_position += m_right * velocity;
 	}
 

@@ -271,13 +271,13 @@ void processInput(GLFWwindow* window)
 
 	const float camera_speed = 3.0f * delta_time;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.processKeyboard(FORWARD, delta_time);
+		camera.processKeyboard(Camera_Movement::FORWARD, delta_time);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.processKeyboard(BACKWARD, delta_time);
+		camera.processKeyboard(Camera_Movement::BACKWARD, delta_time);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.processKeyboard(LEFT, delta_time);
+		camera.processKeyboard(Camera_Movement::LEFT, delta_time);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.processKeyboard(RIGHT, delta_time);
+		camera.processKeyboard(Camera_Movement::RIGHT, delta_time);
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		camera.m_speed = SHIFT_SPEED;
