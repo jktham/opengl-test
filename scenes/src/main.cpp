@@ -16,6 +16,7 @@
 #include "camera.h"
 #include "scene.h"
 #include "wave.h"
+#include "cube.h"
 
 // settings
 const unsigned int WINDOW_WIDTH = 1280;
@@ -57,9 +58,9 @@ void setScene()
 	{
 		scene = new Wave;
 	}
-	else
+	else if (scene_index == 2)
 	{
-		scene = new Scene;
+		scene = new Cube;
 	}
 
 	vertices = scene->getVertices();
@@ -100,19 +101,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
 	{
 		scene_index -= 1;
-		if (scene_index > 1)
+		if (scene_index > 2)
 			scene_index = 0;
 		if (scene_index < 0)
-			scene_index = 1;
+			scene_index = 2;
 		setScene();
 	}
 	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
 	{
 		scene_index += 1;
-		if (scene_index > 1)
+		if (scene_index > 2)
 			scene_index = 0;
 		if (scene_index < 0)
-			scene_index = 1;
+			scene_index = 2;
 		setScene();
 	}
 

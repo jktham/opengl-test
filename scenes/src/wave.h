@@ -102,10 +102,4 @@ public:
 
 		return shaderProgram;
 	}
-
-	virtual glm::mat4 getProjection(Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT)
-	{
-		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-		return projection;
-	}
 };

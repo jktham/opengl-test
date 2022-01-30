@@ -9,7 +9,7 @@ uniform float time;
 
 void main()
 {
-    float scale_v = 2.0f;
+    float scale_v = 2.5f;
     float scale_h = 1.0f / 20.0f * 3.1415926f;
 
     float x = a_pos.x * scale_h + time;

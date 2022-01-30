@@ -149,6 +149,8 @@
     <ClCompile Include="src\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\cube.fs" />
+    <None Include="src\cube.vs" />
     <None Include="src\scene.fs" />
     <None Include="src\scene.vs" />
     <None Include="src\wave.fs" />
@@ -156,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\wave.h" />
