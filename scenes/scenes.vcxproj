@@ -151,6 +151,8 @@
   <ItemGroup>
     <None Include="src\cube.fs" />
     <None Include="src\cube.vs" />
+    <None Include="src\cubes.fs" />
+    <None Include="src\cubes.vs" />
     <None Include="src\scene.fs" />
     <None Include="src\scene.vs" />
     <None Include="src\wave.fs" />
@@ -159,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\cube.h" />
+    <ClInclude Include="src\cubes.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\wave.h" />

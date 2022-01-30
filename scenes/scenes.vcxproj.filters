@@ -44,6 +44,12 @@
     <None Include="src\cube.vs">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="src\cubes.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\cubes.vs">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\camera.h">
@@ -59,6 +65,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\cube.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cubes.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

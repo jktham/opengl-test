@@ -17,6 +17,7 @@
 #include "scene.h"
 #include "wave.h"
 #include "cube.h"
+#include "cubes.h"
 
 // settings
 const unsigned int WINDOW_WIDTH = 1280;
@@ -42,9 +43,6 @@ std::vector<float> vertices;
 unsigned int VAO;
 unsigned int VBO;
 unsigned int shaderProgram;
-glm::mat4 model;
-glm::mat4 view;
-glm::mat4 projection;
 
 bool draw_fill;
 
@@ -64,15 +62,16 @@ void setScene()
 	{
 		scene = new Cube;
 	}
+	else if (scene_index == 3)
+	{
+		scene = new Cubes;
+	}
 
 	vertices = scene->getVertices();
 	VAO = scene->getVAO();
 	VBO = scene->getVBO(vertices);
 	scene->setAttributes();
 	shaderProgram = scene->getShader();
-	model = scene->getModel();
-	view = scene->getView(camera);
-	projection = scene->getProjection(camera, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 // callbacks
@@ -103,19 +102,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
 	{
 		scene_index -= 1;
-		if (scene_index > 2)
+		if (scene_index > 3)
 			scene_index = 0;
 		if (scene_index < 0)
-			scene_index = 2;
+			scene_index = 3;
 		setScene();
 	}
 	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
 	{
 		scene_index += 1;
-		if (scene_index > 2)
+		if (scene_index > 3)
 			scene_index = 0;
 		if (scene_index < 0)
-			scene_index = 2;
+			scene_index = 3;
 		setScene();
 	}
 
@@ -194,11 +193,6 @@ int main()
 	// shader program
 	shaderProgram = scene->getShader();
 
-	// matrices
-	model = scene->getModel();
-	view = scene->getView(camera);
-	projection = scene->getProjection(camera, WINDOW_WIDTH, WINDOW_HEIGHT);
-
 	// opengl settings
 	glEnable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -235,7 +229,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// update matrices, set uniforms, draw vertices
-		scene->render(VAO, vertices, shaderProgram, camera, WINDOW_WIDTH, WINDOW_HEIGHT);
+		scene->render(VAO, vertices, shaderProgram, camera, WINDOW_WIDTH, WINDOW_HEIGHT, delta_time);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

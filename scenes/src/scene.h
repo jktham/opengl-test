@@ -101,24 +101,6 @@ public:
 		glEnableVertexAttribArray(0);
 	}
 
-	virtual glm::mat4 getModel()
-	{
-		glm::mat4 model = glm::mat4(1.0f);
-		return model;
-	}
-
-	virtual glm::mat4 getView(Camera camera)
-	{
-		glm::mat4 view = camera.getViewMatrix();
-		return view;
-	}
-
-	virtual glm::mat4 getProjection(Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT)
-	{
-		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-		return projection;
-	}
-
 	virtual void setUniformMat4(unsigned int shaderProgram, std::string name, glm::mat4 value)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
@@ -129,11 +111,11 @@ public:
 		glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
 	}
 
-	virtual void render(unsigned int VAO, std::vector<float> vertices, unsigned int shaderProgram, Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT)
+	virtual void render(unsigned int VAO, std::vector<float> vertices, unsigned int shaderProgram, Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT, float delta_time)
 	{
-		glm::mat4 model = getModel();
-		glm::mat4 view = getView(camera);
-		glm::mat4 projection = getProjection(camera, WINDOW_WIDTH, WINDOW_HEIGHT);
+		glm::mat4 model = glm::mat4(1.0f);
+		glm::mat4 view = camera.getViewMatrix();
+		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 200.0f);
 
 		glUseProgram(shaderProgram);
 		setUniformMat4(shaderProgram, "model", model);
