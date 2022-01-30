@@ -119,8 +119,28 @@ public:
 		return projection;
 	}
 
-	virtual void render(unsigned int VAO, std::vector<float> vertices)
+	virtual void setUniformMat4(unsigned int shaderProgram, std::string name, glm::mat4 value)
 	{
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+	}
+
+	virtual void setUniformFloat(unsigned int shaderProgram, std::string name, float value)
+	{
+		glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
+	}
+
+	virtual void render(unsigned int VAO, std::vector<float> vertices, unsigned int shaderProgram, Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT)
+	{
+		glm::mat4 model = getModel();
+		glm::mat4 view = getView(camera);
+		glm::mat4 projection = getProjection(camera, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+		glUseProgram(shaderProgram);
+		setUniformMat4(shaderProgram, "model", model);
+		setUniformMat4(shaderProgram, "view", view);
+		setUniformMat4(shaderProgram, "projection", projection);
+		setUniformFloat(shaderProgram, "time", (float)glfwGetTime());
+
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertices.size());
 	}

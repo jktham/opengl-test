@@ -46,6 +46,8 @@ glm::mat4 model;
 glm::mat4 view;
 glm::mat4 projection;
 
+bool draw_fill;
+
 void setScene()
 {
 	delete scene;
@@ -117,7 +119,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		setScene();
 	}
 
-
+	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+	{
+		draw_fill = !draw_fill;
+		if (draw_fill)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		else
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -146,7 +155,6 @@ void scroll_callback(GLFWwindow* window, double offset_x, double offset_y)
 {
 	camera.processMouseScroll(static_cast<float>(offset_y));
 }
-
 
 int main()
 {
@@ -226,20 +234,8 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// update matrices
-		model = scene->getModel();
-		view = scene->getView(camera);
-		projection = scene->getProjection(camera, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-		// set uniforms
-		glUseProgram(shaderProgram);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniform1f(glGetUniformLocation(shaderProgram, "time"), current_frame);
-
-		// draw vertices
-		scene->render(VAO, vertices);
+		// update matrices, set uniforms, draw vertices
+		scene->render(VAO, vertices, shaderProgram, camera, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

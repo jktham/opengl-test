@@ -116,7 +116,7 @@ public:
 
 	float cube_rotation = 0.0f;
 	float cube_rotation_speed = 0.02f;
-	glm::mat4 model;
+	glm::mat4 model = glm::mat4(1.0f);
 
 	virtual glm::mat4 getModel()
 	{
