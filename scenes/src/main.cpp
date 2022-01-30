@@ -11,6 +11,7 @@
 #include <streambuf>
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 #include "stb_image.h"
 #include "camera.h"
@@ -20,6 +21,7 @@
 #include "cubes.h"
 
 // settings
+GLFWwindow* window;
 const unsigned int WINDOW_WIDTH = 1280;
 const unsigned int WINDOW_HEIGHT = 720;
 
@@ -31,7 +33,9 @@ bool first_mouse = true;
 
 // timing
 float delta_time = 0.0f;
+float current_frame = 0.0f;
 float last_frame = 0.0f;
+
 int frame_counter = 0;
 float delta_time_sum = 0.0f;
 float frame_rate = 0.0f;
@@ -53,18 +57,22 @@ void setScene()
 	if (scene_index == 0)
 	{
 		scene = new Scene;
+		glfwSetWindowTitle(window, "scene.h");
 	}
 	else if (scene_index == 1)
 	{
 		scene = new Wave;
+		glfwSetWindowTitle(window, "wave.h");
 	}
 	else if (scene_index == 2)
 	{
 		scene = new Cube;
+		glfwSetWindowTitle(window, "cube.h");
 	}
 	else if (scene_index == 3)
 	{
 		scene = new Cubes;
+		glfwSetWindowTitle(window, "cubes.h");
 	}
 
 	vertices = scene->getVertices();
@@ -163,7 +171,9 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "wave.cpp", NULL, NULL);
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "scene.h", NULL, NULL);
+	glfwSetWindowPos(window, 100, 100);
+
 	glfwMakeContextCurrent(window);
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
@@ -196,43 +206,37 @@ int main()
 	// opengl settings
 	glEnable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// render loop
 	while (!glfwWindowShouldClose(window))
 	{
-		// timing
-		float current_frame = (float)glfwGetTime();
-		delta_time = current_frame - last_frame;
-		last_frame = current_frame;
-
-		if (frame_counter < 59)
+		if ((float)glfwGetTime() - last_frame > 1.0f / 60.0f)
 		{
-			frame_counter += 1;
-			delta_time_sum += delta_time;
+			// timing
+			current_frame = (float)glfwGetTime();
+			delta_time = current_frame - last_frame;
+			last_frame = current_frame;
+			frame_rate = 1.0f / delta_time;
+
+			std::cout << std::fixed;
+			std::cout << std::setprecision(4);
+			std::cout << "time: " << (float)glfwGetTime() << ", delta: " << delta_time << ", fps: " << frame_rate << "\n";
+
+			// keyboard input
+			processInput(window);
+
+			// clear buffers
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			// update matrices, set uniforms, draw vertices
+			scene->render(VAO, vertices, shaderProgram, camera, WINDOW_WIDTH, WINDOW_HEIGHT, delta_time);
+
+			glfwSwapBuffers(window);
+			glfwPollEvents();
 		}
-		else
-		{
-			frame_rate = 1.0f / delta_time_sum * 60.0f;
-			frame_counter = 0;
-			delta_time_sum = 0.0f;
-		}
-
-		std::cout << "time: " << (float)glfwGetTime() << ", delta: " << delta_time << ", fps: " << frame_rate << "\n";
-
-		// keyboard input
-		processInput(window);
-
-		// clear buffers
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// update matrices, set uniforms, draw vertices
-		scene->render(VAO, vertices, shaderProgram, camera, WINDOW_WIDTH, WINDOW_HEIGHT, delta_time);
-
-		glfwSwapBuffers(window);
-		glfwPollEvents();
 	}
 
 	glDeleteVertexArrays(1, &VAO);

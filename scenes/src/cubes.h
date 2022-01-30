@@ -26,46 +26,46 @@ public:
 
 		vertices = {
 			-cube_width, -cube_width, -cube_width,
-			cube_width, -cube_width, -cube_width,
-			cube_width, cube_width, -cube_width,
-			cube_width, cube_width, -cube_width,
-			-cube_width, cube_width, -cube_width,
+			 cube_width, -cube_width, -cube_width,
+			 cube_width,  cube_width, -cube_width,
+			 cube_width,  cube_width, -cube_width,
+			-cube_width,  cube_width, -cube_width,
 			-cube_width, -cube_width, -cube_width,
 
-			-cube_width, -cube_width, cube_width,
-			cube_width, -cube_width, cube_width,
-			cube_width, cube_width, cube_width,
-			cube_width, cube_width, cube_width,
-			-cube_width, cube_width, cube_width,
-			-cube_width, -cube_width, cube_width,
+			-cube_width, -cube_width,  cube_width,
+			 cube_width, -cube_width,  cube_width,
+			 cube_width,  cube_width,  cube_width,
+			 cube_width,  cube_width,  cube_width,
+			-cube_width,  cube_width,  cube_width,
+			-cube_width, -cube_width,  cube_width,
 
-			-cube_width, cube_width, cube_width,
-			-cube_width, cube_width, -cube_width,
+			-cube_width,  cube_width,  cube_width,
+			-cube_width,  cube_width, -cube_width,
 			-cube_width, -cube_width, -cube_width,
 			-cube_width, -cube_width, -cube_width,
-			-cube_width, -cube_width, cube_width,
-			-cube_width, cube_width, cube_width,
+			-cube_width, -cube_width,  cube_width,
+			-cube_width,  cube_width,  cube_width,
 
-			cube_width, cube_width, cube_width,
-			cube_width, cube_width, -cube_width,
-			cube_width, -cube_width, -cube_width,
-			cube_width, -cube_width, -cube_width,
-			cube_width, -cube_width, cube_width,
-			cube_width, cube_width, cube_width,
+			 cube_width,  cube_width,  cube_width,
+			 cube_width,  cube_width, -cube_width,
+			 cube_width, -cube_width, -cube_width,
+			 cube_width, -cube_width, -cube_width,
+			 cube_width, -cube_width,  cube_width,
+			 cube_width,  cube_width,  cube_width,
 
 			-cube_width, -cube_width, -cube_width,
-			cube_width, -cube_width, -cube_width,
-			cube_width, -cube_width, cube_width,
-			cube_width, -cube_width, cube_width,
-			-cube_width, -cube_width, cube_width,
+			 cube_width, -cube_width, -cube_width,
+			 cube_width, -cube_width,  cube_width,
+			 cube_width, -cube_width,  cube_width,
+			-cube_width, -cube_width,  cube_width,
 			-cube_width, -cube_width, -cube_width,
 
-			-cube_width, cube_width, -cube_width,
-			cube_width, cube_width, -cube_width,
-			cube_width, cube_width, cube_width,
-			cube_width, cube_width, cube_width,
-			-cube_width, cube_width, cube_width,
-			-cube_width, cube_width, -cube_width
+			-cube_width,  cube_width, -cube_width,
+			 cube_width,  cube_width, -cube_width,
+			 cube_width,  cube_width,  cube_width,
+			 cube_width,  cube_width,  cube_width,
+			-cube_width,  cube_width,  cube_width,
+			-cube_width,  cube_width, -cube_width
 		};
 		return vertices;
 	}
@@ -136,7 +136,7 @@ public:
 
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = camera.getViewMatrix();
-		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 200.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 400.0f);
 
 		glUseProgram(shaderProgram);
 		setUniformMat4(shaderProgram, "view", view);
