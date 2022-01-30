@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basics", "basics\basics.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lighting", "lighting\lighting.vcxproj", "{8A6E3E64-4C2A-491D-8E17-0249BE6A7C75}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scenes", "scenes\scenes.vcxproj", "{9B8C18E5-48EE-4B85-99B6-A7B46B935632}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stuff", "stuff\stuff.vcxproj", "{9B8C18E5-48EE-4B85-99B6-A7B46B935632}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -24,6 +24,7 @@
     <ProjectGuid>{9b8c18e5-48ee-4b85-99b6-a7b46b935632}</ProjectGuid>
     <RootNamespace>stuff</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>scenes</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -118,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,17 +145,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
-    <ClCompile Include="src\wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\scene.fs" />
+    <None Include="src\scene.vs" />
     <None Include="src\wave.fs" />
     <None Include="src\wave.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\camera.h" />
-    <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\wave.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
