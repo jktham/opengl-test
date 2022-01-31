@@ -101,14 +101,24 @@ public:
 		glEnableVertexAttribArray(0);
 	}
 
-	virtual void setUniformMat4(unsigned int shaderProgram, std::string name, glm::mat4 value)
+	virtual void setUniformInt(unsigned int shaderProgram, std::string name, int value)
 	{
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+		glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value);
 	}
 
 	virtual void setUniformFloat(unsigned int shaderProgram, std::string name, float value)
 	{
 		glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
+	}
+
+	virtual void setUniformVec3(unsigned int shaderProgram, std::string name, glm::vec3 value)
+	{
+		glUniform3f(glGetUniformLocation(shaderProgram, name.c_str()), value[0], value[1], value[2]);
+	}
+
+	virtual void setUniformMat4(unsigned int shaderProgram, std::string name, glm::mat4 value)
+	{
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 	}
 
 	virtual void render(unsigned int VAO, std::vector<float> vertices, unsigned int shaderProgram, Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT, float delta_time)

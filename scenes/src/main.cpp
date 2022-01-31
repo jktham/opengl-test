@@ -39,6 +39,7 @@ float last_frame = 0.0f;
 int frame_counter = 0;
 float delta_time_sum = 0.0f;
 float frame_rate = 0.0f;
+float frame_rate_limit = 120.0f;
 
 // scene
 Scene* scene = nullptr;
@@ -212,7 +213,7 @@ int main()
 	// render loop
 	while (!glfwWindowShouldClose(window))
 	{
-		if ((float)glfwGetTime() - last_frame > 1.0f / 60.0f)
+		if ((float)glfwGetTime() - last_frame > 1.0f / frame_rate_limit)
 		{
 			// timing
 			current_frame = (float)glfwGetTime();

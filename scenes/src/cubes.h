@@ -117,20 +117,19 @@ public:
 	bool generated = false;
 	float cube_area = 150.0f;
 	static const int cube_amount = 1000;
-	glm::vec3 cube_positions[cube_amount]{};
+	glm::vec3 cube_positions[cube_amount];
 
 	void render(unsigned int VAO, std::vector<float> vertices, unsigned int shaderProgram, Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT, float delta_time)
 	{
 		if (!generated)
 		{
-			int seed = (int)time(NULL);
+			int seed = (int)(100 * (float)glfwGetTime());
 			srand((unsigned)seed);
 
-			for (unsigned int i = 0; i < cube_amount; i++)
+			for (int i = 0; i < cube_amount; i++)
 			{
 				cube_positions[i] = glm::vec3((float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f, (float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f, (float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f);
 			}
-
 			generated = true;
 		}
 
@@ -139,18 +138,17 @@ public:
 		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 400.0f);
 
 		glUseProgram(shaderProgram);
+		setUniformMat4(shaderProgram, "model", model);
 		setUniformMat4(shaderProgram, "view", view);
 		setUniformMat4(shaderProgram, "projection", projection);
 		setUniformFloat(shaderProgram, "time", (float)glfwGetTime());
 
-		glBindVertexArray(VAO);
 		for (int i = 0; i < cube_amount; i++)
 		{
-			model = glm::translate(glm::mat4(1.0f), cube_positions[i]);
-
-			setUniformMat4(shaderProgram, "model", model);
-
-			glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertices.size());
+			setUniformVec3(shaderProgram, ("positions[" + std::to_string(i) + "]"), cube_positions[i]);
 		}
+
+		glBindVertexArray(VAO);
+		glDrawArraysInstanced(GL_TRIANGLES, 0, (GLsizei)vertices.size(), cube_amount);
 	}
 };
