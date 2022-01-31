@@ -126,8 +126,8 @@ public:
 		cube_rotation += cube_rotation_speed * delta_time;
 
 		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 10.0f));
-		model = glm::rotate(model, glm::radians(45.0f), glm::normalize(glm::vec3(1.0f, 0.0f, 1.0f)));
-		model = glm::rotate(model, cube_rotation, glm::normalize(glm::vec3(-1.0f, -1.0f, 1.0f)));
+		model = glm::rotate(model, glm::radians(54.736f), glm::normalize(glm::vec3(-1.0f, 0.0f, 1.0f)));
+		model = glm::rotate(model, cube_rotation, glm::normalize(glm::vec3(1.0f, 1.0f, 1.0f)));
 
 		glUseProgram(shaderProgram);
 		setUniformMat4(shaderProgram, "model", model);
