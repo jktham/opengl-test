@@ -155,6 +155,8 @@
     <None Include="src\cubes.vs" />
     <None Include="src\scene.fs" />
     <None Include="src\scene.vs" />
+    <None Include="src\sphere.fs" />
+    <None Include="src\sphere.vs" />
     <None Include="src\wave.fs" />
     <None Include="src\wave.vs" />
   </ItemGroup>
@@ -163,6 +165,7 @@
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\cubes.h" />
     <ClInclude Include="src\scene.h" />
+    <ClInclude Include="src\sphere.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\wave.h" />
   </ItemGroup>

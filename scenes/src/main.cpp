@@ -19,6 +19,7 @@
 #include "wave.h"
 #include "cube.h"
 #include "cubes.h"
+#include "sphere.h"
 
 // settings
 GLFWwindow* window;
@@ -26,7 +27,7 @@ const unsigned int WINDOW_WIDTH = 1280;
 const unsigned int WINDOW_HEIGHT = 720;
 
 // camera
-Camera camera(glm::vec3(10.0f, 5.0f, 30.0f));
+Camera camera(glm::vec3(10.0f, 0.0f, 40.0f));
 float last_x = WINDOW_WIDTH / 2.0f;
 float last_y = WINDOW_HEIGHT / 2.0f;
 bool first_mouse = true;
@@ -42,6 +43,7 @@ float frame_rate = 0.0f;
 float frame_rate_limit = 120.0f;
 
 // scene
+int max_scenes = 4;
 Scene* scene = nullptr;
 int scene_index = 0;
 std::vector<float> vertices;
@@ -74,6 +76,11 @@ void setScene()
 	{
 		scene = new Cubes;
 		glfwSetWindowTitle(window, "cubes.h");
+	}
+	else if (scene_index == 4)
+	{
+		scene = new Sphere;
+		glfwSetWindowTitle(window, "sphere.h");
 	}
 
 	vertices = scene->getVertices();
@@ -111,19 +118,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
 	{
 		scene_index -= 1;
-		if (scene_index > 3)
+		if (scene_index > max_scenes)
 			scene_index = 0;
 		if (scene_index < 0)
-			scene_index = 3;
+			scene_index = max_scenes;
 		setScene();
 	}
 	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
 	{
 		scene_index += 1;
-		if (scene_index > 3)
+		if (scene_index > max_scenes)
 			scene_index = 0;
 		if (scene_index < 0)
-			scene_index = 3;
+			scene_index = max_scenes;
 		setScene();
 	}
 

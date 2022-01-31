@@ -75,10 +75,10 @@ public:
 
 		if (constrain_pitch)
 		{
-			if (m_pitch > 89.0f)
-				m_pitch = 89.0f;
-			if (m_pitch < -89.0f)
-				m_pitch = -89.0f;
+			if (m_pitch > 89.99f)
+				m_pitch = 89.99f;
+			if (m_pitch < -89.99f)
+				m_pitch = -89.99f;
 		}
 
 		updateCameraVectors();

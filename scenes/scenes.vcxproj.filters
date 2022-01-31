@@ -50,6 +50,12 @@
     <None Include="src\cubes.vs">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="src\sphere.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\sphere.vs">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\camera.h">
@@ -68,6 +74,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\cubes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sphere.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
