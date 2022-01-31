@@ -115,9 +115,10 @@ public:
 	}
 
 	bool generated = false;
-	float cube_area = 300.0f;
-	static const int cube_amount = 8000;
-	glm::vec3 cube_positions[cube_amount];
+	float cube_area = 400.0f;
+	static const int cube_amount = 10000;
+	glm::vec3 cube_positions[cube_amount]{};
+	unsigned int instanceVBO;
 
 	void render(unsigned int VAO, std::vector<float> vertices, unsigned int shaderProgram, Camera camera, unsigned int WINDOW_WIDTH, unsigned int WINDOW_HEIGHT, float delta_time)
 	{
@@ -130,12 +131,22 @@ public:
 			{
 				cube_positions[i] = glm::vec3((float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f, (float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f, (float)std::rand() / RAND_MAX * cube_area - cube_area / 2.0f);
 			}
+
+			glGenBuffers(1, &instanceVBO);
+			glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * cube_amount, &cube_positions[0], GL_STATIC_DRAW);
+
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glVertexAttribDivisor(1, 1);
+
 			generated = true;
 		}
 
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = camera.getViewMatrix();
-		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 600.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
 
 		glUseProgram(shaderProgram);
 		setUniformMat4(shaderProgram, "model", model);
@@ -143,15 +154,6 @@ public:
 		setUniformMat4(shaderProgram, "projection", projection);
 		setUniformFloat(shaderProgram, "time", (float)glfwGetTime());
 
-		unsigned int instanceVBO;
-		glGenBuffers(1, &instanceVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * cube_amount, &cube_positions[0], GL_STATIC_DRAW);
-
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glVertexAttribDivisor(1, 1);
 
 		glBindVertexArray(VAO);
 		glDrawArraysInstanced(GL_TRIANGLES, 0, (GLsizei)vertices.size(), cube_amount);

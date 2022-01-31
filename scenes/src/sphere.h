@@ -71,7 +71,6 @@ public:
 
 		for (int i = 0; i < vertices.size(); i++)
 		{
-
 		}
 
 		vertices = sides;
@@ -127,7 +126,7 @@ public:
 	{
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = camera.getViewMatrix();
-		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 200.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 1000.0f);
 
 		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 10.0f));
 
