@@ -29,6 +29,8 @@
     <ClCompile Include="src\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\lighting\src\light_shader.fs" />
+    <None Include="..\lighting\src\light_shader.vs" />
     <None Include="src\shader.frag" />
     <None Include="src\shader.vert" />
   </ItemGroup>

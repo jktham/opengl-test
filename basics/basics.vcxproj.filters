@@ -43,6 +43,12 @@
     <None Include="src\shader.frag">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="..\lighting\src\light_shader.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\lighting\src\light_shader.vs">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\awesomeface.png">
