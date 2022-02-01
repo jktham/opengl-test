@@ -130,18 +130,19 @@ int main()
 
 	glBindVertexArray(0);
 
-	// light object
+	// light vertex array object
 	unsigned int light_VAO;
 	glGenVertexArrays(1, &light_VAO);
 	glBindVertexArray(light_VAO);
 
+	// light vertex attribute (position)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
 
 
-	// vertex shader
+	// object vertex shader
 	const char* vertexShaderSource;
 
 	std::ifstream vertFile("src/shader.vs");
@@ -155,7 +156,7 @@ int main()
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 
-	// fragment shader
+	// object fragment shader
 	const char* fragmentShaderSource;
 
 	std::ifstream fragFile("src/shader.fs");
@@ -169,7 +170,7 @@ int main()
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
 
-	// shader program
+	// object shader program
 	unsigned int shaderProgram;
 	shaderProgram = glCreateProgram();
 
@@ -181,7 +182,7 @@ int main()
 	glDeleteShader(fragmentShader);
 
 
-	// vertex shader
+	// light vertex shader
 	const char* light_vertexShaderSource;
 
 	std::ifstream light_vertFile("src/light_shader.vs");
@@ -195,7 +196,7 @@ int main()
 	glShaderSource(light_vertexShader, 1, &light_vertexShaderSource, NULL);
 	glCompileShader(light_vertexShader);
 
-	// fragment shader
+	// light fragment shader
 	const char* light_fragmentShaderSource;
 
 	std::ifstream light_fragFile("src/light_shader.fs");
@@ -209,7 +210,7 @@ int main()
 	glShaderSource(light_fragmentShader, 1, &light_fragmentShaderSource, NULL);
 	glCompileShader(light_fragmentShader);
 
-	// shader program
+	// light shader program
 	unsigned int light_shaderProgram;
 	light_shaderProgram = glCreateProgram();
 
@@ -255,22 +256,28 @@ int main()
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-			// update matrices
+			// object
 			model = glm::mat4(1.0f);
 			view = camera.getViewMatrix();
 			projection = glm::perspective(glm::radians(camera.m_fov), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 
-			// set uniforms
 			glUseProgram(shaderProgram);
 			glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 			glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 			glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-			glUniform3f(glGetUniformLocation(shaderProgram, "object_color"), 1.0f, 0.5f, 0.31f);
-			glUniform3f(glGetUniformLocation(shaderProgram, "light_color"), 1.0f, 1.0f, 1.0f);
-			glUniform3f(glGetUniformLocation(shaderProgram, "light_pos"), light_pos[0], light_pos[1], light_pos[2]);
+
 			glUniform3f(glGetUniformLocation(shaderProgram, "view_pos"), camera.m_position[0], camera.m_position[1], camera.m_position[2]);
 
-			// draw vertices
+			glUniform3f(glGetUniformLocation(shaderProgram, "material.ambient"), 1.0f, 0.5f, 0.31f);
+			glUniform3f(glGetUniformLocation(shaderProgram, "material.diffuse"), 1.0f, 0.5f, 0.31f);
+			glUniform3f(glGetUniformLocation(shaderProgram, "material.specular"), 0.5f, 0.5f, 0.5f);
+			glUniform1f(glGetUniformLocation(shaderProgram, "material.shininess"), 32.0f);
+
+			glUniform3f(glGetUniformLocation(shaderProgram, "light.position"), light_pos[0], light_pos[1], light_pos[2]);
+			glUniform3f(glGetUniformLocation(shaderProgram, "light.ambient"), 0.2f, 0.2f, 0.2f);
+			glUniform3f(glGetUniformLocation(shaderProgram, "light.diffuse"), 0.5f, 0.5f, 0.5f);
+			glUniform3f(glGetUniformLocation(shaderProgram, "light.specular"), 1.0f, 1.0f, 1.0f);
+
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 			glBindVertexArray(0);
