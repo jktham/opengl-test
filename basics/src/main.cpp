@@ -10,7 +10,7 @@
 #include <streambuf>
 #include <iostream>
 
-#include "stb_image.h"
+#include <stb_image/stb_image.h>
 #include "shader.h"
 #include "camera.h"
 
@@ -148,7 +148,7 @@ int main()
 	unsigned int texture1;
 	glGenTextures(1, &texture1);
 	glBindTexture(GL_TEXTURE_2D, texture1);
-	data = stbi_load("res/wood.jpg", &width, &height, &channels, 0);
+	data = stbi_load("res/textures/wood.jpg", &width, &height, &channels, 0);
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -159,7 +159,7 @@ int main()
 	unsigned int texture2;
 	glGenTextures(1, &texture2);
 	glBindTexture(GL_TEXTURE_2D, texture2);
-	data = stbi_load("res/brick.jpg", &width, &height, &channels, 0);
+	data = stbi_load("res/textures/brick.jpg", &width, &height, &channels, 0);
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -176,7 +176,7 @@ int main()
 	glEnableVertexAttribArray(1);
 
 	// shader program
-	Shader shader("src/shader.vert", "src/shader.frag");
+	Shader shader("res/shaders/shader.vert", "res/shaders/shader.frag");
 
 	// set texture uniforms
 	shader.use();

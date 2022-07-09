@@ -11,7 +11,7 @@
 #include <streambuf>
 #include <iostream>
 
-#include "stb_image.h"
+#include <stb_image/stb_image.h>
 #include "camera.h"
 #include "scene.h"
 
@@ -64,7 +64,7 @@ public:
 		// vertex shader
 		const char* vertexShaderSource;
 
-		std::ifstream vertFile("src/wave.vs");
+		std::ifstream vertFile("res/shaders/wave.vs");
 		std::string vertString((std::istreambuf_iterator<char>(vertFile)),
 			std::istreambuf_iterator<char>());
 		vertexShaderSource = vertString.c_str();
@@ -78,7 +78,7 @@ public:
 		// fragment shader
 		const char* fragmentShaderSource;
 
-		std::ifstream fragFile("src/wave.fs");
+		std::ifstream fragFile("res/shaders/wave.fs");
 		std::string fragString((std::istreambuf_iterator<char>(fragFile)),
 			std::istreambuf_iterator<char>());
 		fragmentShaderSource = fragString.c_str();

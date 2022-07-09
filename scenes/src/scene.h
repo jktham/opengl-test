@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 
-#include "stb_image.h"
+#include <stb_image/stb_image.h>
 #include "camera.h"
 
 class Scene
@@ -39,7 +39,7 @@ public:
 		// vertex shader
 		const char* vertexShaderSource;
 
-		std::ifstream vertFile("src/scene.vs");
+		std::ifstream vertFile("res/shaders/scene.vs");
 		std::string vertString((std::istreambuf_iterator<char>(vertFile)),
 			std::istreambuf_iterator<char>());
 		vertexShaderSource = vertString.c_str();
@@ -53,7 +53,7 @@ public:
 		// fragment shader
 		const char* fragmentShaderSource;
 
-		std::ifstream fragFile("src/scene.fs");
+		std::ifstream fragFile("res/shaders/scene.fs");
 		std::string fragString((std::istreambuf_iterator<char>(fragFile)),
 			std::istreambuf_iterator<char>());
 		fragmentShaderSource = fragString.c_str();

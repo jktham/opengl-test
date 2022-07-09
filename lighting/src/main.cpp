@@ -11,7 +11,7 @@
 #include <iostream>
 #include <iomanip>
 
-#include "stb_image.h"
+#include <stb_image/stb_image.h>
 #include "camera.h"
 
 // settings
@@ -145,7 +145,7 @@ int main()
 	// object vertex shader
 	const char* vertexShaderSource;
 
-	std::ifstream vertFile("src/shader.vs");
+	std::ifstream vertFile("res/shaders/shader.vs");
 	std::string vertString((std::istreambuf_iterator<char>(vertFile)),
 		std::istreambuf_iterator<char>());
 	vertexShaderSource = vertString.c_str();
@@ -159,7 +159,7 @@ int main()
 	// object fragment shader
 	const char* fragmentShaderSource;
 
-	std::ifstream fragFile("src/shader.fs");
+	std::ifstream fragFile("res/shaders/shader.fs");
 	std::string fragString((std::istreambuf_iterator<char>(fragFile)),
 		std::istreambuf_iterator<char>());
 	fragmentShaderSource = fragString.c_str();
@@ -185,7 +185,7 @@ int main()
 	// light vertex shader
 	const char* light_vertexShaderSource;
 
-	std::ifstream light_vertFile("src/light_shader.vs");
+	std::ifstream light_vertFile("res/shaders/light_shader.vs");
 	std::string light_vertString((std::istreambuf_iterator<char>(light_vertFile)),
 		std::istreambuf_iterator<char>());
 	light_vertexShaderSource = light_vertString.c_str();
@@ -199,7 +199,7 @@ int main()
 	// light fragment shader
 	const char* light_fragmentShaderSource;
 
-	std::ifstream light_fragFile("src/light_shader.fs");
+	std::ifstream light_fragFile("res/shaders/light_shader.fs");
 	std::string light_fragString((std::istreambuf_iterator<char>(light_fragFile)),
 		std::istreambuf_iterator<char>());
 	light_fragmentShaderSource = light_fragString.c_str();
